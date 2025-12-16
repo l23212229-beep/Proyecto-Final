@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Ensayos clínicos</title>
+  <link rel="stylesheet" href="styles.css"/>
+  <style>
+    /* Estilos adicionales para ensayos */
+    .estado-badge {
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      display: inline-block;
+    }
+    
+    .estado-activo {
+      background-color: #d4edda;
+      color: #155724;
+    }
+    
+    .estado-completado {
+      background-color: #d1ecf1;
+      color: #0c5460;
+    }
+    
+    .estado-cancelado {
+      background-color: #f8d7da;
+      color: #721c24;
+    }
+    
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0;
+      background-color: white;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    
+    .table th, .table td {
+      padding: 0.75rem;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+    
+    .table th {
+      background-color: #f8f9fa;
+      font-weight: 600;
+    }
+    
+    .table tr:hover {
+      background-color: #f5f7fa;
+    }
+    
+    .form-section {
+      background-color: white;
+      padding: 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      margin-bottom: 2rem;
+    }
+    
+    .list-section {
+      background-color: white;
+      padding: 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    
+    .form-row {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    
+    .form-row .form-group {
+      flex: 1;
+    }
+    
+    .header-section {
+      margin-bottom: 2rem;
+      padding: 1rem;
+      background-color: #e9f7fe;
+      border-radius: 8px;
+    }
+    
+    .small-text {
+      font-size: 0.875rem;
+      color: #666;
+      margin-top: 0.5rem;
+    }
+    
+    .empty-message {
+      text-align: center;
+      padding: 2rem;
+      color: #666;
+      font-style: italic;
+    }
+    
+    .success {
+      color: #155724;
+      background-color: #d4edda;
+      padding: 1rem;
+      border-radius: 4px;
+      margin-top: 1rem;
+    }
+    
+    .error {
+      color: #721c24;
+      background-color: #f8d7da;
+      padding: 1rem;
+      border-radius: 4px;
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <div id="navbar"></div>
+  <main class="container">
+    <h1>Ensayos Clínicos</h1>
+    
+    <div class="header-section">
+      <a href="/crear-tabla-ensayos" class="btn" target="_blank">🛠️ Crear Tabla de Ensayos</a>
+      <p class="small-text">(Solo administrador - ejecutar una vez si no puedes crear ensayos)</p>
+    </div>
+
+    <section class="form-section">
+      <h2>Crear Nuevo Ensayo</h2>
+      <form id="formEnsayo">
+        <div class="form-group">
+          <label for="titulo">Título:</label>
+          <input type="text" id="titulo" name="titulo" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="descripcion">Descripción:</label>
+          <textarea id="descripcion" name="descripcion" rows="3" required></textarea>
+        </div>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label for="fecha_inicio">Fecha inicio:</label>
+            <input type="date" id="fecha_inicio" name="fecha_inicio" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="fecha_fin">Fecha fin (opcional):</label>
+            <input type="date" id="fecha_fin" name="fecha_fin">
+          </div>
+          
+          <div class="form-group">
+            <label for="estado">Estado:</label>
+            <select id="estado" name="estado">
+              <option value="activo">Activo</option>
+              <option value="completado">Completado</option>
+              <option value="cancelado">Cancelado</option>
+            </select>
+          </div>
+        </div>
+        
+        <button type="submit" class="btn">Crear Ensayo</button>
+      </form>
+      <div id="mensajeForm"></div>
+    </section>
+
+    <section class="list-section">
+      <h2>Listado de Ensayos</h2>
+      <button id="refreshBtn" class="btn secondary">🔄 Actualizar Lista</button>
+      <div id="lista"></div>
+    </section>
+  </main>
+  
+  <script>
+    // Cargar navbar
+    fetch('/navbar.html')
+      .then(r => r.text())
+      .then(html => {
+        document.getElementById('navbar').innerHTML = html;
+        return fetch('/tipo-usuario');
+      })
+      .then(r => r.json())
+      .then(info => {
+        const menu = document.getElementById('menu');
+        menu.innerHTML += '<li><a href="/logout">Cerrar Sesión</a></li>';
+      })
+      .catch(err => console.error('Error:', err));
+
+    // Función para cargar ensayos
+    function cargarEnsayos() {
+      const listaDiv = document.getElementById('lista');
+      listaDiv.innerHTML = '<p>Cargando ensayos...</p>';
+      
+      fetch('/ensayos')
+        .then(r => {
+          if (!r.ok) throw new Error('Error en la respuesta');
+          return r.json();
+        })
+        .then(rows => {
+          if (rows.length === 0) {
+            listaDiv.innerHTML = '<p class="empty-message">No hay ensayos clínicos registrados.</p>';
+            return;
+          }
+          
+          let html = '<table class="table"><thead><tr><th>Título</th><th>Descripción</th><th>Fecha Inicio</th><th>Fecha Fin</th><th>Estado</th><th>Creado Por</th></tr></thead><tbody>';
+          
+          rows.forEach(e => {
+            const fechaInicio = e.fecha_inicio ? new Date(e.fecha_inicio).toLocaleDateString() : 'N/A';
+            const fechaFin = e.fecha_fin ? new Date(e.fecha_fin).toLocaleDateString() : 'En curso';
+            const estadoClass = e.estado === 'activo' ? 'estado-activo' : 
+                               e.estado === 'completado' ? 'estado-completado' : 'estado-cancelado';
+            
+            html += `
+              <tr>
+                <td><strong>${e.titulo}</strong></td>
+                <td>${e.descripcion ? (e.descripcion.length > 100 ? e.descripcion.substring(0, 100) + '...' : e.descripcion) : 'Sin descripción'}</td>
+                <td>${fechaInicio}</td>
+                <td>${fechaFin}</td>
+                <td><span class="estado-badge ${estadoClass}">${e.estado || 'activo'}</span></td>
+                <td>${e.creado_por || 'Sistema'}</td>
+              </tr>
+            `;
+          });
+          
+          html += '</tbody></table>';
+          listaDiv.innerHTML = html;
+        })
+        .catch(err => {
+          console.error('Error al cargar ensayos:', err);
+          listaDiv.innerHTML = `<p class="error">Error al cargar los ensayos: ${err.message}</p>`;
+        });
+    }
+
+    // Manejar envío del formulario
+    document.getElementById('formEnsayo').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const formData = {
+        titulo: document.getElementById('titulo').value,
+        descripcion: document.getElementById('descripcion').value,
+        fecha_inicio: document.getElementById('fecha_inicio').value,
+        fecha_fin: document.getElementById('fecha_fin').value || null,
+        estado: document.getElementById('estado').value || 'activo'
+      };
+      
+      const mensajeDiv = document.getElementById('mensajeForm');
+      
+      try {
+        const response = await fetch('/ensayos', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(formData)
+        });
+        
+        const result = await response.json();
+        
+        if (response.ok) {
+          mensajeDiv.innerHTML = `<div class="success">✅ ${result.message || 'Ensayo creado correctamente'}</div>`;
+          document.getElementById('formEnsayo').reset();
+          cargarEnsayos(); // Recargar la lista
+        } else {
+          mensajeDiv.innerHTML = `<div class="error">❌ Error: ${result.error || 'Error desconocido'}</div>`;
+        }
+      } catch (error) {
+        mensajeDiv.innerHTML = `<div class="error">❌ Error de conexión: ${error.message}</div>`;
+      }
+    });
+
+    // Botón para actualizar
+    document.getElementById('refreshBtn').addEventListener('click', cargarEnsayos);
+
+    // Cargar ensayos al iniciar
+    cargarEnsayos();
+  </script>
+</body>
+</html>
