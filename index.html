@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sistema Biomédico - Inicio</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="navbar"></div>
+  
+  <main class="container">
+    <h1>Bienvenido al Sistema Biomédico</h1>
+    
+    <div class="welcome-section">
+      <h2>Gestión Integral de Pacientes y Ensayos Clínicos</h2>
+      <p>Sistema especializado para el seguimiento de pacientes, ensayos clínicos y análisis biomédicos.</p>
+      
+      <div class="features">
+        <div class="feature-card">
+          <h3>👥 Gestión de Pacientes</h3>
+          <p>Registro y seguimiento completo de pacientes</p>
+        </div>
+        
+        <div class="feature-card">
+          <h3>📊 Ensayos Clínicos</h3>
+          <p>Administración y monitoreo de estudios clínicos</p>
+        </div>
+        
+        <div class="feature-card">
+          <h3>📈 Análisis de Datos</h3>
+          <p>Reportes y estadísticas en tiempo real</p>
+        </div>
+      </div>
+      
+      <div class="quick-links">
+        <a href="/panel.html" class="btn">Ir al Panel Principal</a>
+        <a href="/ver-pacientes" class="btn secondary">Ver Pacientes</a>
+        <a href="/ensayos.html" class="btn secondary">Ver Ensayos</a>
+      </div>
+    </div>
+  </main>
+  
+  <script>
+    // Cargar navbar
+    fetch('/navbar.html')
+      .then(r => r.text())
+      .then(html => {
+        document.getElementById('navbar').innerHTML = html;
+      })
+      .catch(err => console.error('Error al cargar navbar:', err));
+  </script>
+</body>
+</html>
