@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Equipos</title>
+  <link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+  <div id="navbar"></div>
+  <main class="container">
+    <h1>Equipos biomédicos</h1>
+    <div id="tabla"></div>
+  </main>
+  <script>
+    fetch('/navbar.html').then(r=>r.text()).then(html=>{
+      document.getElementById('navbar').innerHTML = html;
+      return fetch('/tipo-usuario');
+    }).then(r=>r.json()).then(info=>{
+      const menu = document.getElementById('menu');
+      menu.innerHTML += '<li><a href="/logout">Cerrar Sesión</a></li>';
+    });
+
+    async function cargar() {
+      const r = await fetch('/equipos');
+      const rows = await r.json();
+      const div = document.getElementById('tabla');
+      const table = document.createElement('table');
+      table.className = 'table';
+      table.innerHTML = `
+        <thead><tr><th>Nombre</th><th>Modelo</th><th>Serie</th><th>Estado</th><th>Acción</th></tr></thead>
+        <tbody></tbody>`;
+      const tb = table.querySelector('tbody');
+      rows.forEach(eq => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${eq.nombre}</td>
+          <td>${eq.modelo || ''}</td>
+          <td>${eq.serie || ''}</td>
+          <td>${eq.estado}</td>
+          <td>
+            <select id="estado-${eq.id}">
+              <option ${eq.estado==='operativo'?'selected':''}>operativo</option>
+              <option ${eq.estado==='mantenimiento'?'selected':''}>mantenimiento</option>
+              <option ${eq.estado==='fuera_servicio'?'selected':''}>fuera_servicio</option>
+            </select>
+            <button data-id="${eq.id}">Guardar</button>
+          </td>`;
+        tb.appendChild(tr);
+      });
+      div.innerHTML = '';
+      div.appendChild(table);
+
+      div.querySelectorAll('button[data-id]').forEach(btn=>{
+        btn.addEventListener('click', async ()=>{
+          const id = btn.getAttribute('data-id');
+          const estado = document.getElementById(`estado-${id}`).value;
+          const resp = await fetch(`/equipos/${id}/estado`, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ estado })
+          });
+          if (resp.ok) alert('Actualizado');
+          else alert('Error o no autorizado');
+          cargar();
+        });
+      });
+    }
+    cargar();
+  </script>
+</body>
+</html>
