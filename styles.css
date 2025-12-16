@@ -1,0 +1,714 @@
+/* ===== ESTILOS TECNOLÓGICOS MODERNOS - ERRORES CORREGIDOS ===== */
+:root {
+  --primary-gradient: linear-gradient(135deg, #00b4db 0%, #0083b0 100%);
+  --secondary-gradient: linear-gradient(135deg, #f9d423 0%, #ff4e50 100%);
+  --accent-gradient: linear-gradient(135deg, #56ab2f 0%, #a8e063 100%);
+  --tech-blue: #00b4db;
+  --tech-yellow: #f9d423;
+  --tech-green: #56ab2f;
+  --dark-bg: #0a1929;
+  --card-bg: rgba(255, 255, 255, 0.95);
+  --text-dark: #1a237e;
+  --text-light: #5d5d5d;
+  --shadow-tech: 0 10px 30px rgba(0, 180, 219, 0.15);
+  --shadow-hover: 0 15px 40px rgba(0, 180, 219, 0.25);
+}
+
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  color: var(--text-dark);
+  min-height: 100vh;
+  line-height: 1.6;
+}
+
+/* ===== NAVBAR TECNOLÓGICA ===== */
+.tech-navbar {
+  background: var(--primary-gradient);
+  padding: 1.2rem 0;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: var(--shadow-tech);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.tech-nav-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.tech-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* CORRECCIÓN: Propiedades background-clip en orden correcto */
+.tech-logo {
+  font-size: 1.8rem;
+  font-weight: 800;
+  background: var(--secondary-gradient);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.tech-tagline {
+  font-size: 0.9rem;
+  color: white;
+  opacity: 0.9;
+  font-weight: 300;
+}
+
+.tech-nav-menu {
+  display: flex;
+  list-style: none;
+  gap: 2px;
+  margin: 0;
+  padding: 0;
+}
+
+.tech-nav-item {
+  position: relative;
+}
+
+.tech-nav-link {
+  color: white;
+  text-decoration: none;
+  padding: 12px 24px;
+  border-radius: 25px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.tech-nav-link:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.tech-nav-icon {
+  font-size: 1.2rem;
+}
+
+/* ===== CONTENEDORES ===== */
+.tech-container {
+  max-width: 1400px;
+  margin: 3rem auto;
+  padding: 0 2rem;
+}
+
+.tech-hero {
+  text-align: center;
+  padding: 5rem 2rem;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.7));
+  border-radius: 30px;
+  margin-bottom: 3rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.tech-hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 5px;
+  background: var(--primary-gradient);
+}
+
+/* CORRECCIÓN: Propiedades background-clip en orden correcto */
+.tech-hero h1 {
+  font-size: 2.5rem;
+  background: var(--primary-gradient);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  margin-bottom: 1rem;
+  font-weight: 800;
+}
+
+@media (min-width: 768px) {
+  .tech-hero h1 {
+    font-size: 3.5rem;
+  }
+}
+
+.tech-hero p {
+  font-size: 1.2rem;
+  color: var(--text-light);
+  max-width: 700px;
+  margin: 0 auto 2rem;
+}
+
+/* ===== TARJETAS TECNOLÓGICAS ===== */
+.tech-card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+  margin: 3rem 0;
+}
+
+.tech-card {
+  background: var(--card-bg);
+  border-radius: 20px;
+  padding: 2.5rem;
+  text-align: center;
+  transition: all 0.4s ease;
+  border: 1px solid rgba(0, 180, 219, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.tech-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--accent-gradient);
+}
+
+.tech-card:hover {
+  transform: translateY(-10px);
+  box-shadow: var(--shadow-hover);
+}
+
+/* CORRECCIÓN: Propiedades background-clip en orden correcto */
+.tech-card-icon {
+  font-size: 3rem;
+  margin-bottom: 1.5rem;
+  background: var(--primary-gradient);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.tech-card h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: var(--text-dark);
+}
+
+.tech-card p {
+  color: var(--text-light);
+  margin-bottom: 1.5rem;
+}
+
+/* ===== FORMULARIOS ===== */
+.tech-form-container {
+  max-width: 500px;
+  margin: 4rem auto;
+  background: var(--card-bg);
+  border-radius: 25px;
+  padding: 3rem;
+  box-shadow: var(--shadow-tech);
+  border: 1px solid rgba(0, 180, 219, 0.1);
+}
+
+/* CORRECCIÓN: Propiedades background-clip en orden correcto */
+.tech-form-title {
+  text-align: center;
+  margin-bottom: 2.5rem;
+  background: var(--primary-gradient);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.tech-form-group {
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+.tech-form-label {
+  display: block;
+  margin-bottom: 0.8rem;
+  color: var(--text-dark);
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tech-form-input {
+  width: 100%;
+  padding: 1rem 1.5rem;
+  border: 2px solid #e0e0e0;
+  border-radius: 12px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.tech-form-input:focus {
+  outline: none;
+  border-color: var(--tech-blue);
+  box-shadow: 0 0 0 3px rgba(0, 180, 219, 0.1);
+}
+
+/* ===== BOTONES TECNOLÓGICOS ===== */
+.tech-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 1rem 2.5rem;
+  border: none;
+  border-radius: 25px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+}
+
+.tech-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: 0.5s;
+}
+
+.tech-btn:hover::before {
+  left: 100%;
+}
+
+.tech-btn-primary {
+  background: var(--primary-gradient);
+  color: white;
+}
+
+.tech-btn-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-hover);
+}
+
+.tech-btn-secondary {
+  background: var(--secondary-gradient);
+  color: white;
+}
+
+.tech-btn-secondary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 40px rgba(249, 212, 35, 0.25);
+}
+
+.tech-btn-accent {
+  background: var(--accent-gradient);
+  color: white;
+}
+
+.tech-btn-accent:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 40px rgba(86, 171, 47, 0.25);
+}
+
+.tech-btn-back {
+  background: rgba(0, 180, 219, 0.1);
+  color: var(--tech-blue);
+  border: 2px solid var(--tech-blue);
+}
+
+.tech-btn-back:hover {
+  background: var(--tech-blue);
+  color: white;
+}
+
+.tech-btn-icon {
+  font-size: 1.2rem;
+}
+
+/* ===== TABLAS TECNOLÓGICAS ===== */
+.tech-table-container {
+  background: var(--card-bg);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: var(--shadow-tech);
+  margin: 2rem 0;
+}
+
+.tech-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tech-table thead {
+  background: var(--primary-gradient);
+}
+
+.tech-table th {
+  padding: 1.5rem;
+  color: white;
+  text-align: left;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-size: 0.9rem;
+}
+
+.tech-table tbody tr {
+  border-bottom: 1px solid rgba(0, 180, 219, 0.1);
+  transition: background 0.3s ease;
+}
+
+.tech-table tbody tr:hover {
+  background: rgba(0, 180, 219, 0.05);
+}
+
+.tech-table td {
+  padding: 1.2rem 1.5rem;
+  color: var(--text-dark);
+}
+
+/* ===== BADGES DE ROLES ===== */
+.tech-badge {
+  display: inline-block;
+  padding: 6px 15px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: white;
+}
+
+.badge-admin {
+  background: linear-gradient(135deg, #ff416c, #ff4b2b);
+}
+
+.badge-medico {
+  background: linear-gradient(135deg, #36d1dc, #5b86e5);
+}
+
+.badge-paciente {
+  background: linear-gradient(135deg, #a8ff78, #78ffd6);
+  color: #1a237e;
+}
+
+.badge-investigador {
+  background: linear-gradient(135deg, #f46b45, #eea849);
+}
+
+/* ===== SECCIÓN DE ACCIONES ===== */
+.tech-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* ===== FOOTER TECNOLÓGICO ===== */
+.tech-footer {
+  background: var(--dark-bg);
+  color: white;
+  padding: 3rem 0;
+  margin-top: 5rem;
+}
+
+.tech-footer-content {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  text-align: center;
+}
+
+.tech-footer-links {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin: 2rem 0;
+}
+
+.tech-footer-link {
+  color: rgba(255, 255, 255, 0.7);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.tech-footer-link:hover {
+  color: var(--tech-blue);
+}
+
+/* ===== ANIMACIONES ===== */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.tech-floating {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* ===== MENSAJES ===== */
+.tech-message {
+  background: var(--card-bg);
+  border-radius: 20px;
+  padding: 3rem;
+  text-align: center;
+  margin: 4rem auto;
+  max-width: 600px;
+  box-shadow: var(--shadow-tech);
+  border-left: 5px solid var(--tech-blue);
+}
+
+/* CORRECCIÓN: Propiedades background-clip en orden correcto */
+.tech-message-icon {
+  font-size: 4rem;
+  margin-bottom: 1.5rem;
+  background: var(--primary-gradient);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.tech-message h2 {
+  color: var(--text-dark);
+  margin-bottom: 1rem;
+}
+
+.tech-message p {
+  color: var(--text-light);
+  margin-bottom: 2rem;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .tech-container {
+    padding: 0 1rem;
+  }
+  
+  .tech-hero {
+    padding: 3rem 1rem;
+  }
+  
+  .tech-hero h1 {
+    font-size: 2rem;
+  }
+  
+  .tech-card-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .tech-nav-container {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .tech-nav-menu {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .tech-actions {
+    flex-direction: column;
+  }
+  
+  .tech-btn {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .tech-form-container {
+    padding: 2rem;
+    margin: 2rem auto;
+  }
+}
+
+/* ===== ESTILOS BÁSICOS DE PÁGINA ===== */
+a {
+  text-decoration: none;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin-bottom: 1rem;
+}
+
+p {
+  margin-bottom: 1rem;
+}
+
+/* ===== UTILIDADES ===== */
+.text-center {
+  text-align: center;
+}
+
+.mt-2 { margin-top: 2rem; }
+.mb-2 { margin-bottom: 2rem; }
+.mt-3 { margin-top: 3rem; }
+.mb-3 { margin-bottom: 3rem; }
+
+/* ===== COMPATIBILIDAD CON FORMULARIOS EXISTENTES ===== */
+.login-container,
+.register-container {
+  max-width: 400px;
+  margin: 4rem auto;
+  padding: 2rem;
+  background-color: var(--card-bg);
+  border-radius: 20px;
+  box-shadow: var(--shadow-tech);
+  border: 1px solid rgba(0, 180, 219, 0.1);
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: var(--text-dark);
+}
+
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 1rem;
+  border: 2px solid #e0e0e0;
+  border-radius: 12px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: var(--tech-blue);
+  box-shadow: 0 0 0 3px rgba(0, 180, 219, 0.1);
+}
+
+.btn {
+  display: inline-block;
+  background: var(--primary-gradient);
+  color: white;
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 25px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.btn:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-hover);
+}
+
+/* ===== COMPATIBILIDAD CON NAVBAR EXISTENTE ===== */
+.navbar {
+  background: var(--primary-gradient);
+  padding: 1rem 0;
+}
+
+.nav-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-brand a {
+  color: white;
+  text-decoration: none;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.nav-menu {
+  display: flex;
+  list-style: none;
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-menu a {
+  color: white;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  transition: background-color 0.3s;
+}
+
+.nav-menu a:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.container {
+  max-width: 1400px;
+  margin: 2rem auto;
+  padding: 0 2rem;
+}
+
+/* ===== COMPATIBILIDAD CON TABLAS EXISTENTES ===== */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0;
+  background-color: var(--card-bg);
+  box-shadow: var(--shadow-tech);
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.table th {
+  padding: 1.5rem;
+  text-align: left;
+  background: var(--primary-gradient);
+  color: white;
+  font-weight: 600;
+}
+
+.table td {
+  padding: 1.2rem 1.5rem;
+  border-bottom: 1px solid rgba(0, 180, 219, 0.1);
+  color: var(--text-dark);
+}
+
+.table tr:hover {
+  background: rgba(0, 180, 219, 0.05);
+}
