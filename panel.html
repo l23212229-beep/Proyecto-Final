@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Panel principal - Sistema Biomédico</title>
+  <link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+  <!-- Barra de navegación -->
+  <div id="navbar"></div>
+  <script>
+    // Cargar barra de navegación en todas las páginas
+    fetch('navbar.html')
+      .then(res => res.text())
+      .then(html => document.getElementById('navbar').innerHTML = html);
+  </script>
+
+  <main class="container">
+    <h1>Panel principal</h1>
+
+    <!-- Búsqueda en tiempo real -->
+    <section>
+      <h2>Buscar pacientes</h2>
+      <input type="text" id="buscarPaciente" placeholder="Escribe para buscar...">
+      <div id="resultados"></div>
+    </section>
+
+    <!-- Subida de archivos Excel -->
+    <section>
+      <h2>Subir archivos (Excel)</h2>
+      <form id="uploadForm" enctype="multipart/form-data">
+        <input type="file" name="archivo" accept=".xlsx,.xls" required>
+        <button type="submit">Subir</button>
+      </form>
+      <div id="mensajeUpload"></div>
+    </section>
+
+    <!-- Descarga de archivos Excel -->
+    <section>
+      <h2>Descargar datos</h2>
+      <button id="downloadExcel">Descargar Excel</button>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+
+  <main class="container">
+  <h1>Panel principal</h1>
+
+  <!-- Sección visible solo para admin -->
+  <section id="adminSection" style="display:none;">
+    <h2>Gestión de usuarios</h2>
+    <a href="registro.html">Registrar nuevo usuario</a>
+    <h2>Descargar datos globales</h2>
+    <button id="downloadExcel">Descargar Excel</button>
+  </section>
+
+  <!-- Sección visible para doctor y admin -->
+  <section id="doctorSection" style="display:none;">
+    <h2>Buscar pacientes</h2>
+    <input type="text" id="buscarPaciente" placeholder="Escribe para buscar...">
+    <div id="resultados"></div>
+  </section>
+
+  <!-- Sección visible solo para paciente -->
+  <section id="pacienteSection" style="display:none;">
+    <h2>Mi resumen</h2>
+    <p>Aquí se mostrarán tus datos personales y ensayos clínicos asociados.</p>
+  </section>
+</main>
+
+</body>
+</html>
