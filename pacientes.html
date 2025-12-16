@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Pacientes</title>
+  <link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+  <div id="navbar"></div>
+  <main class="container">
+    <h1>Pacientes</h1>
+    <div id="lista"></div>
+  </main>
+  <script>
+    fetch('/navbar.html').then(r => r.text()).then(html => {
+      document.getElementById('navbar').innerHTML = html;
+      return fetch('/tipo-usuario');
+    }).then(r => r.json()).then(info => {
+      const menu = document.getElementById('menu');
+      menu.innerHTML += '<li><a href="/logout">Cerrar Sesión</a></li>';
+    });
+
+    fetch('/ver-pacientes').then(r => {
+      if (!r.ok) throw new Error('Acceso denegado');
+      return r.json();
+    }).then(rows => {
+      const div = document.getElementById('lista');
+      const ul = document.createElement('ul');
+      rows.forEach(p => {
+        const li = document.createElement('li');
+        li.textContent = `${p.nombre} (${p.sexo || 'N/A'})`;
+        ul.appendChild(li);
+      });
+      div.appendChild(ul);
+    }).catch(err => {
+      document.getElementById('lista').innerHTML = '<p>No autorizado o error.</p>';
+    });
+  </script>
+</body>
+</html>
